@@ -2006,6 +2006,13 @@ namespace SequelocityDotNet
 
             for ( int i = 0; i < fieldCount; i++ )
             {
+                // Handle special case field assignment for ExpandoObject type
+                if (type == typeof(ExpandoObject))
+                {
+                    ((IDictionary<string, Object>)mappedObject).Add(dataRecord.GetName(i), dataRecord.GetValue(i));
+                    continue;
+                }
+
                 string dataRecordFieldName = dataRecord.GetName( i ).ToLower();
 
                 object memberInfo = orderedDictionary[dataRecordFieldName];
